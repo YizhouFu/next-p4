@@ -12,7 +12,7 @@ export default function EventDetail() {
   const event = getEventById(eventId);
 
   if (!event) {
-    return <p>no such event</p>;
+    return <p>No Event Was Found</p>;
   }
 
   return (
