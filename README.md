@@ -6,6 +6,9 @@ Part 4 - Dummy Event List Web-Site
 Part 6 - Pre-rendering and data-fetching
 
 
+## Might Want to Include
+npm install swr
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
