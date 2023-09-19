@@ -9,11 +9,18 @@ import useSWR from "swr";
 
 export default function FilteredEvents(props) {
   const [loadedEvents, setLoadedEvents] = useState();
+
   const router = useRouter();
   const filterData = router.query.slug;
+
   const { data, error } = useSWR(
-    "https://next-course-fetching-default-rtdb.firebaseio.com/events.json"
+    'https://next-course-fetching-default-rtdb.firebaseio.com/events.json',
+    (url) => fetch(url).then((res) => res.json())
   );
+
+  console.log(filterData);
+  console.log(data);
+
   useEffect(() => {
     if (data) {
       const eventlist = [];
@@ -24,10 +31,12 @@ export default function FilteredEvents(props) {
           ...data[key],
         });
       }
-
+      console.log(eventlist);
       setLoadedEvents(eventlist);
     }
   }, [data]);
+
+  console.log(loadedEvents);
 
   if (!loadedEvents) {
     return (
