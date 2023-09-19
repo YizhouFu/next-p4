@@ -3,6 +3,7 @@ import SearchEvent from "@/components/events/event_search";
 import { getAllEvents } from "@/helpers/api-util";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
+import Head from 'next/head';
 
 export default function AllEvents(props) {
   const { events } = props;
