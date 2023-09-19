@@ -6,6 +6,7 @@ import ErrorAlert from "@/components/ui/error-alert";
 import { useRouter } from "next/router";
 import { Fragment, useState, useEffect } from "react";
 import useSWR from "swr";
+import Head from "next/head";
 
 export default function FilteredEvents(props) {
   const [loadedEvents, setLoadedEvents] = useState();
@@ -14,12 +15,9 @@ export default function FilteredEvents(props) {
   const filterData = router.query.slug;
 
   const { data, error } = useSWR(
-    'https://next-course-fetching-default-rtdb.firebaseio.com/events.json',
+    "https://next-course-fetching-default-rtdb.firebaseio.com/events.json",
     (url) => fetch(url).then((res) => res.json())
   );
-
-  console.log(filterData);
-  console.log(data);
 
   useEffect(() => {
     if (data) {
@@ -36,13 +34,21 @@ export default function FilteredEvents(props) {
     }
   }, [data]);
 
-  console.log(loadedEvents);
+  let pageHead = (
+    <Head>
+      <title>Filtered events</title>
+      <meta name="description" content={"list of filtered events"} />
+    </Head>
+  );
 
   if (!loadedEvents) {
     return (
-      <ErrorAlert>
-        <p>Loading...</p>
-      </ErrorAlert>
+      <Fragment>
+        {pageHead}
+        <ErrorAlert>
+          <p>Loading...</p>
+        </ErrorAlert>
+      </Fragment>
     );
   }
 
@@ -50,6 +56,16 @@ export default function FilteredEvents(props) {
   const filteredMonth = filterData[1];
   const numYear = +filteredYear;
   const numMonth = +filteredMonth;
+
+  pageHead = (
+    <Head>
+      <title>Filtered events</title>
+      <meta
+        name="description"
+        content={`all events for ${numMonth} - ${numYear}`}
+      />
+    </Head>
+  );
 
   if (
     // props.hasError
@@ -63,6 +79,7 @@ export default function FilteredEvents(props) {
   ) {
     return (
       <Fragment>
+        {pageHead}
         <ErrorAlert>
           <p>Invalid Search, Please adjust Your Search Terms</p>
         </ErrorAlert>
@@ -81,7 +98,6 @@ export default function FilteredEvents(props) {
     );
   });
 
-
   // const filteredEvents = props.events;
   // const FilteredEvents = getFilteredEvents({
   //   year: numYear,
@@ -91,6 +107,7 @@ export default function FilteredEvents(props) {
   if (!filteredEvents || filteredEvents.length === 0) {
     return (
       <Fragment>
+        {pageHead}
         <ErrorAlert>
           <p>Sorry, No Events Matches Your Search</p>
         </ErrorAlert>
@@ -105,6 +122,7 @@ export default function FilteredEvents(props) {
 
   return (
     <Fragment>
+      {pageHead}
       <ResultsTitle date={date} />
       <EventList events={filteredEvents} />
     </Fragment>

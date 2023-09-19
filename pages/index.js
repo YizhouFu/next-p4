@@ -7,6 +7,7 @@ export default function Home(props) {
   return (
     <div>
       <Head>
+      <title>featured events</title>
         <meta
           name="description"
           content="Find Events that allow you to evolve..."
