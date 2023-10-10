@@ -1,7 +1,7 @@
 export default function handler(req, res) {
-  const eventId = req.quert.eventId;
+  const eventId = req.query.eventId;
 
-  if (req.method === "post") {
+  if (req.method === "POST") {
     //add serverside validation
     const { email, name, text } = req.body;
     if (
